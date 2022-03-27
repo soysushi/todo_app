@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 
 #third party
 from rest_framework.permissions import IsAuthenticated
@@ -19,7 +20,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
-
+CustomUser = get_user_model()
 
 class TestView(APIView):
     permission_classes = (IsAuthenticated, )
@@ -31,6 +32,8 @@ class TestView(APIView):
 
     def post(self, request, *args, **kwargs):
         serializer = TodoSerializer(data=request.data)
+        print(serializer)
+        serializer.user_id = CustomUser
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
