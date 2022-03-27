@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third party apps
-    'rest_framework_api_key',
+    'rest_framework.authtoken',
+    'rest_framework',
     # local app
     'api',
     'users',
@@ -55,12 +56,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'todo_server_app.urls'
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework_api_key.permissions.HasAPIKey',
-    ]
-}
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -130,6 +125,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Creating API token for each newly created account
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
