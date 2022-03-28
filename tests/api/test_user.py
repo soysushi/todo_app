@@ -7,12 +7,14 @@
 
 import pytest
 from rest_framework.test import APIClient
-
+from rest_framework.authtoken.models import Token
 client = APIClient()
 
 def test_new_user(django_user_model):
     test_user = django_user_model.objects.create(username="someone", password="something")
     client.force_login(test_user)
-    response = client.post('api/token', test_user)
+    token = Token.objects.create(user=test_user)
+    client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+    response = client.get('/')
     data = response
-    assert response.status_code == 404
+    assert response.status_code == 200

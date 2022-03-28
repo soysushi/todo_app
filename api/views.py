@@ -25,7 +25,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 # Add and Filter TODO
 class TodoListCreateView(generics.ListCreateAPIView):
-    # permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     serializer_class = TodoSerializer
     def get_queryset(self):
         queryset = Todo.objects.all()
