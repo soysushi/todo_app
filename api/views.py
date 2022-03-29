@@ -23,7 +23,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
-# Add and Filter TODO
+# Add and Filter todo
 class TodoListCreateView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = TodoSerializer
@@ -49,9 +49,9 @@ class TodoListCreateView(generics.ListCreateAPIView):
             queryset = queryset.filter(user_id=user)
         return queryset
 
-# Delete
+# Delete, Update todo
 class TodoDeleteView(generics.RetrieveUpdateDestroyAPIView):
-
+    permission_classes = (IsAuthenticated, )
     serializer_class = TodoSerializer
     queryset = Todo.objects.all()
 
