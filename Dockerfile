@@ -7,7 +7,8 @@ ENV PYTHONUNBUFFERED 1
 # Set work directory
 WORKDIR /code
 # Install dependencies
-COPY Pipfile Pipfile.lock /code/
-RUN pip install pipenv && pipenv install --system
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
 # Copy project
 COPY . /code/
