@@ -1,6 +1,6 @@
 
 # TODO API
-A lightweight TODO list server application. User can create add, delete, and update a TODO object.
+A lightweight TODO list server application. User can create add, delete, and update a TODO object. Comes with django admin in default /admin url.
 
 ## Installation
 
@@ -73,7 +73,7 @@ python manage.py runserver
 
 
 
-#### Create a TODO
+#### ADD a TODO
 
 ```http
   POST /
@@ -85,6 +85,30 @@ python manage.py runserver
 | `task_description`      | `string` | **Required**. description of task |
 | `task_state`      | `string` | **Required**. to_do, in_progress, done |
 | `task_due_date`      | `date` | **Required**. date field  |
+
+
+#### DELETE a TODO
+
+```http
+  DELETE /delete
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `task_id`      | `uuid` | **Required**. task id |
+
+
+#### UPDATE a TODO
+
+```http
+  PUT /delete
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `task_title`      | `string` | **Required**. task title |
+| `task_description`      | `string` | **Required**. description of task |
+| `user_id`      | `uuid` | **Required**. user's uuid - can be seen in django admin |
 
 ## Docker 
 
@@ -104,15 +128,11 @@ docker-compose up -d --build
 docker-compose exec web python manage.py createsuperuser
 ```
 
+4. Shut everything down
+```
+docker-compose down
+```
 This creates the server app, database, and nginx in 3 containers total.
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`AUTH_USER_MODEL`
-
-`REST_FRAMEWORK`
 
 
 ## Running Tests
@@ -126,10 +146,20 @@ To run tests, run the following command
 
 ## Usage/Examples
 
+## Get API Key from command line 
 ```cURL
 curl --location --request POST 'http://127.0.0.1:8000/api/token/' \
 --form 'username="test"' \
 --form 'password="testpass123"'
 ```
 
-I recommend using postman to easily test the API endpoints.
+## Update a TODO
+```
+curl --location --request PUT 'http://localhost:8000/delete/35cdd318-1081-4a22-8e8a-14c3ec744798' \
+--header 'Authorization: token 0969eb28a6369296f42dc36f271336d6e69d1297' \
+--form 'task_title="test"' \
+--form 'task_description="testpass123"' \
+--form 'user_id="6d57a688-5e51-4926-943c-7fd06b5cf55f"'
+```
+
+I recommend using postman to easily test the API endpoints. 
