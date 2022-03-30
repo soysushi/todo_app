@@ -90,12 +90,9 @@ python manage.py runserver
 #### DELETE a TODO
 
 ```http
-  DELETE /delete
+  DELETE /delete/<uuid:task_id>
 ```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `task_id`      | `uuid` | **Required**. task id |
+Will return http status code 204 when deleted
 
 
 #### UPDATE a TODO
@@ -162,4 +159,10 @@ curl --location --request PUT 'http://localhost:8000/delete/35cdd318-1081-4a22-8
 --form 'user_id="6d57a688-5e51-4926-943c-7fd06b5cf55f"'
 ```
 
+## Delete a TODO
+curl --location --request DELETE 'http://localhost:8000/delete/f4e55ff0-6ee0-49a5-8fde-e1849371145f' \
+--header 'Authorization: token 0969eb28a6369296f42dc36f271336d6e69d1297'
+
 I recommend using postman to easily test the API endpoints. 
+
+Every API endpoint has a mixin, so it needs the token attained from either /api/token, cURL, or logging into django admin
