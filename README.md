@@ -9,12 +9,12 @@ Getting it up and running with Git
 # How to Setup
 1. Clone Project
 ```
-git clone https://github.com/soysushi/tribe_inventory.git
+git clone https://github.com/soysushi/todo_app.git
 ```
 
 2. Go To Project Directory
 ```
-cd inventory-management
+cd todo_app
 ```
 3. Create Virtual Environment
 ```
