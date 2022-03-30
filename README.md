@@ -86,14 +86,25 @@ python manage.py runserver
 | `task_state`      | `string` | **Required**. to_do, in_progress, done |
 | `task_due_date`      | `date` | **Required**. date field  |
 
-## Deployment
+## Docker 
 
-To deploy this project run
+To run a docker image of this project, make sure you have docker installed.
 
-```bash
-  npm run deploy
+1. Build the docker image
+```
+docker build .
 ```
 
+2. Compose in detached mode
+```
+docker-compose up -d --build
+```
+3. Create Super User
+```
+docker-compose exec web python manage.py createsuperuser
+```
+
+This creates the server app, database, and nginx in 3 containers total.
 
 ## Environment Variables
 
@@ -121,3 +132,4 @@ curl --location --request POST 'http://127.0.0.1:8000/api/token/' \
 --form 'password="testpass123"'
 ```
 
+I recommend using postman to easily test the API endpoints.
