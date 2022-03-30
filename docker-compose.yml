@@ -1,6 +1,12 @@
 version: '3.9'
 
 services:
+  nginx:
+      build: ./nginx
+      ports:
+        - 1337:80
+      depends_on:
+        - web
   web:
     build: .
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn todo_server_app.wsgi -b 0.0.0.0:8000"
@@ -10,8 +16,11 @@ services:
       - 8000:8000
     depends_on:
       - db
+    links:
+    - db:db
   db:
     image: postgres:12
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  

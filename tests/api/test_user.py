@@ -20,7 +20,7 @@ def test_new_user(django_user_model):
     client.force_login(test_user)
     token = Token.objects.create(user=test_user)
     client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-    response = client.get('/')
+    response = client.get('http://localhost:1337/')
     data = response
     assert response.status_code == 200
     # add a todo
